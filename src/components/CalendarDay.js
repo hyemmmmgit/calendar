@@ -9,8 +9,7 @@ const DateBlock = styled.div`
   ${({ active }) =>
     active &&
     css`
-      background-color: skyblue;
-      color: white;
+      background-color: #a077ff;
       font-weight: bold;
     `}
   &:hover {
@@ -23,7 +22,6 @@ const CalendarDay = ({
   renderMonth,
   renderYear,
   isCurrentMonth,
-  currentTargets,
   onClickDate,
   selectedTargets,
 }) => {
@@ -35,7 +33,7 @@ const CalendarDay = ({
 
   return (
     <DateBlock
-      style={{ color: !isCurrentMonth && 'gray' }}
+      style={{ color: !isCurrentMonth && '#d6bbff' }}
       active={renderDate === selectedTargets.date && isCurrent}
       onClick={() => {
         if (!isCurrentMonth) return;

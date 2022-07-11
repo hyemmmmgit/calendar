@@ -1,6 +1,4 @@
 import React from 'react';
-import { useCallback } from 'react';
-import { useMemo } from 'react';
 import styled from 'styled-components';
 import CalendarDay from './CalendarDay';
 
@@ -12,7 +10,10 @@ const BodyBlock = styled.div`
   gap: 4px;
   text-align: center;
   & div:nth-child(7n + 1) {
-    color: red;
+    color: #fe86c1;
+  }
+  & div:nth-child(7n) {
+    color: #40cbea;
   }
 `;
 const DayLabel = styled.div`
@@ -42,7 +43,7 @@ const CalendarBody = ({ currentTargets, onClickDate, selectedTargets }) => {
   //     return dateArr;
   //   }, [lastDate]);
 
-  const { year, Month, date } = currentTargets;
+  const { year, Month } = currentTargets;
 
   const startDate = new Date(year, Month, 1);
 
@@ -59,7 +60,6 @@ const CalendarBody = ({ currentTargets, onClickDate, selectedTargets }) => {
 
   const renderDate = () => {
     let result = [];
-
     for (let i = 0; i < 42; i++) {
       result.push(
         <CalendarDay
@@ -82,7 +82,7 @@ const CalendarBody = ({ currentTargets, onClickDate, selectedTargets }) => {
   return (
     <BodyBlock>
       {dayList.map((day, idx) => (
-        <DayLabel key={idx} style={{ color: idx === 0 && 'red' }}>
+        <DayLabel key={idx} style={{ color: idx === 0 && '#fe86c1' }}>
           {day}
         </DayLabel>
       ))}

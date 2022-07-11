@@ -3,16 +3,18 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import CalendarBody from './CalendarBody';
 import CalendarHeader from './CalendarHeader';
+import media from '../responsive';
 
 const Positoner = styled.div`
   flex: 1;
   display: flex;
-  width: 100vw;
-  height: 100vh;
-  background-color: azure;
   justify-content: center;
   align-items: center;
   user-select: none;
+  height: 100vh;
+  ${media.tablet`
+    padding-top : 28px;
+  `}
 `;
 
 const CalendarBlock = styled.div`
@@ -20,24 +22,30 @@ const CalendarBlock = styled.div`
   flex-direction: column;
   width: 400px;
   height: 400px;
-  background-color: white;
   border-radius: 4px;
   box-shadow: 4px 4px 4px 3px rgba(0, 0, 0, 0.28);
+  ${media.tablet`
+    width: 350px;
+    height: 350px;
+  `}
 `;
 
-const today = new Date();
+const TodayBtn = styled.button`
+  cursor: pointer;
+  font-size: 28px;
+  border: none;
+  background-color: #a077ff;
+  margin-top: 4px;
+`;
 
-const initialDate = {
-  year: today.getFullYear(),
-  Month: today.getMonth(),
-  date: today.getDate(),
-};
-
-const CalendarTemplate = () => {
+const CalendarTemplate = ({
+  initialDate,
+  selectedTargets,
+  setSelectedTargets,
+}) => {
   const [currentTargets, setCurrentTargets] = useState(initialDate);
 
-  const { year, Month, date } = currentTargets;
-  const [selectedTargets, setSelectedTargets] = useState(initialDate);
+  const { year, Month } = currentTargets;
 
   const increasement = () => {
     if (Month < 11)
@@ -90,10 +98,10 @@ const CalendarTemplate = () => {
           onClickDate={onClickDate}
           selectedTargets={selectedTargets}
         />
-        <button onClick={Today}>TODAY</button>
+        <TodayBtn onClick={Today}>TODAY</TodayBtn>
       </CalendarBlock>
     </Positoner>
   );
 };
 
-export default CalendarTemplate;
+export default React.memo(CalendarTemplate);

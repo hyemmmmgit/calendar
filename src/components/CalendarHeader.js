@@ -30,13 +30,13 @@ const CalendarHeader = ({ currentTargets, increasement, decreasement }) => {
   return (
     <HeaderBlock>
       <BtnBlock onClick={decreasement}>
-        <FaAngleLeft color="gray" />
+        <FaAngleLeft />
       </BtnBlock>{' '}
       <p>
         {year}년 {Month + 1}월
       </p>
       <BtnBlock onClick={increasement}>
-        <FaAngleRight color="gray" />
+        <FaAngleRight />
       </BtnBlock>{' '}
     </HeaderBlock>
   );

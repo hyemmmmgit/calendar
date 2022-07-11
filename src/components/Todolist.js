@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import TodolistItem from './TodolistItem';
 
-const Todolist = ({ todos, onToggle, onRemove }) => {
+const Todolist = ({ todos, onToggle, onRemove, selectedTargets }) => {
   return (
     <div>
       {todos.map((todo) => (
@@ -10,10 +10,11 @@ const Todolist = ({ todos, onToggle, onRemove }) => {
           onToggle={onToggle}
           key={todo.id}
           onRemove={onRemove}
+          selectedTargets={selectedTargets}
         />
       ))}
     </div>
   );
 };
 
-export default Todolist;
+export default React.memo(Todolist);

@@ -6,60 +6,83 @@ import { useCallback } from 'react';
 import { useRef } from 'react';
 import { useState } from 'react';
 import { createGlobalStyle } from 'styled-components';
+import media from './responsive';
 
 const GlobalStyle = createGlobalStyle`
+body {
+  font-family: 'Courier New', Courier, monospace;
+  
+}
 .App {
   display: flex;
+  ${media.tablet`
+  flex-direction: column;
+  padding: 28px;
+  `}
 }
 `;
 
+const today = new Date();
+
+const initialDate = {
+  year: today.getFullYear(),
+  Month: today.getMonth(),
+  date: today.getDate(),
+};
+
 function App() {
   const [todos, setTodos] = useState([
-    { id: 1, text: '옷입기', checked: true },
-    { id: 2, text: '밥먹기', checked: true },
-    { id: 3, text: '잠자기', checked: false },
+    { id: 1, text: '옷입기', checked: true, date: '2022.7.8' },
+    { id: 2, text: '밥먹기', checked: true, date: '2022.7.7' },
+    { id: 3, text: '잠자기', checked: false, date: '2022.7.6' },
   ]);
+  const [selectedTargets, setSelectedTargets] = useState(initialDate);
 
   const nextID = useRef(4);
 
-  const onInsert = useCallback(
-    function (text) {
-      const todo = {
-        id: nextID.current,
-        text,
-        checked: false,
-      };
-      setTodos(todos.concat(todo));
-      nextID.current++;
-    },
-    [todos]
-  );
+  const onInsert = useCallback(function (text, date) {
+    const todo = {
+      id: nextID.current,
+      text,
+      checked: false,
+      date,
+    };
+    setTodos((todos) => todos.concat(todo));
+    nextID.current++;
+  }, []);
 
-  const onToggle = useCallback(
-    function (id) {
-      setTodos(
-        todos.map((todo) =>
-          todo.id === id ? { ...todo, checked: !todo.checked } : todo
-        )
-      );
-    },
-    [todos]
-  );
+  const onToggle = useCallback(function (id) {
+    setTodos((todos) =>
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, checked: !todo.checked } : todo
+      )
+    );
+  }, []);
 
-  const onRemove = useCallback(
-    function (id) {
-      setTodos(todos.filter((todo) => todo.id !== id));
-    },
-    [todos]
-  );
+  const onRemove = useCallback(function (id) {
+    setTodos((todos) => todos.filter((todo) => todo.id !== id));
+  }, []);
+
   return (
     <>
       <GlobalStyle />
       <div className="App">
-        <CalendarTemplate></CalendarTemplate>
+        <CalendarTemplate
+          initialDate={initialDate}
+          selectedTargets={selectedTargets}
+          setSelectedTargets={setSelectedTargets}
+        ></CalendarTemplate>
         <TodolistTemplate>
-          <TodolistInsert onInsert={onInsert} />
-          <Todolist todos={todos} onToggle={onToggle} onRemove={onRemove} />
+          <TodolistInsert
+            onInsert={onInsert}
+            selectedTargets={selectedTargets}
+          />
+          <Todolist
+            todos={todos}
+            onToggle={onToggle}
+            onRemove={onRemove}
+            selectedTargets={selectedTargets}
+          />
         </TodolistTemplate>
       </div>
     </>

@@ -6,11 +6,12 @@ const TodolistTemplate = ({ children }) => {
     margin: 0 auto;
     text-align: center;
     flex: 1;
+    margin: 28px;
   `;
 
   return (
     <Block>
-      <h1>To-do list</h1>
+      <h1>MY TO-DO-LIST</h1>
       {children}
     </Block>
   );
